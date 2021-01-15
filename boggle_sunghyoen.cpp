@@ -1,3 +1,5 @@
+
+//c++ 문법에 맞게 바꾸기 Boggle 9202 문제 
 #include <bits/stdc++.h> 
 
 
@@ -5,10 +7,19 @@ using namespace std;
   
 const int ALPHABET_SIZE = 26; 
 vector<string> v;
-bool visited[26];
+vector<char> sb;
 
  
- 
+int mx[]={-1,1,0,0,-1,1,-1,1};
+int my[]={0,0,-1,1,-1,-1,1,1};
+int score[]={0,0,0,1,1,2,3,5,11}; 
+	
+char map[4][4]={};
+string answer;
+int sum;
+int count;
+	
+bool visited[4][4];
  
   
 // trie node 
@@ -54,88 +65,85 @@ void insert(struct TrieNode *root, string key)
   
 // Returns true if key presents in trie, else 
 // false 
-bool search(struct TrieNode *root, string key) 
+void search(struct TrieNode *root, int x, int y) 
 { 
-    struct TrieNode *pCrawl = root;
-    bool key_value[26]={0};
-    for(int i=0; i<key.length();i++){
-    	int index = key[i]-'a';
-    	key_value[index] = true;
-	}
-	
+    
+	struct TrieNode *pCrawl = root;
 	// 1.체크인
-	for(int i=0; i< key.length(); i++){
-		int index = key[i] -'a';
-		if(pCrawl->children[index]){
-			visited[index]=true;
-			pCrawl = pCrawl->children[index];
-			
-		}else{
-			// 단어가 없음. 
-			return false;
-		}
-		// visited and key compare
-		
-		
-		
-	}
-	 pCrawl->isEndOfWord = true; 
-	
+	visited[y][x] = true;
+	sb.push_back(map[y][x]);
 	//2. 목적지에 도달하였는가?
+	if(pCrawl.isEndOfWord && pCrawl.isHit == false){
+		// 점수계산 
+		pCrawl.isHit = true;
+		sum += score[length];
+		count++;
+		string foundWord = sb.toString();
+		if(compare(answer, foundWord)>0){
+			answer = foundWord;
+		}
+	}
 	// 3. 연결된 곳을 순회
-	//4. 가능한가?
-	//5. 간다
+	for(int i=0; i< 8; i++){
+		int ty = y + my[i];
+		int tx = x +mx[i];
+		//4. 가능한가?
+		//5. 간다
+		if(0<=ty && ty <4 && 0<=tx && tx <4){
+			if(visited[ty][tx]==false && pCrawl.hasChild(map[ty][tx])){
+				search(ty,tx,length+1,getChild(map[ty][tx]));
+			}
+		}
+	}
+	
 	// 6. 체크아 웃 
-	visited[index] =false;
-  
-    for (int i = 0; i < key.length(); i++) 
-    { 
-        int index = key[i] - 'a'; 
-        if (!pCrawl->children[index]) 
-            return false; 
-  
-        pCrawl = pCrawl->children[index]; 
-    } 
-  
-    return (pCrawl != NULL && pCrawl->isEndOfWord); 
+	visited[y][x] = false;
+	sb.clear();
 } 
+
+int compare(string arg0, string arg1){
+	int result = compare(arg1.length(), arg0.length()); // long txt
+	if(result == 0){
+		return arg0.compareTo(arg1);
+	}else{
+		return result;
+	}
+}
   
 // Driver 
 int main() 
 { 
     // Input keys (use only 'a' through 'z' 
     // and lower case) 
-    
-	
-	
-	int mx[]={-1,1,0,0,-1,1,-1,1};
-	int my[]={0,0,-1,1,-1,-1,1,1};
-	int score={0,0,0,1,1,2,3,5,11}; 
-	
-	
-	
-	
-	
+    	
 	 
-    int N,M;
+    int N,W;
 	cin>>N; 
   	string str;
     struct TrieNode *root = getNode(); 
   	
-  	
   	v.assign(N,"");
     // Construct trie 
-    for (int i = 0; i < N; i++){
+    
+	for (int i = 0; i < N; i++){
     	cin >> str;
 		v[i]=str;
     	insert(root, v[i]);
 	} 
+	
+	cin >> W;
+	
+	for (int i=0; i<W; i++){
+		
+	}
+	
+	for(int y=0; y<4;y++){
+		for(int x=0; x<4; x++){
+			if(root.hasChild(map[y][x])){
+				search(y,x,1,root.getChild(map[y][x]));
+			}
+		}
+	}
          
-  
-    // Search for different keys 
-    search(root, "ICP")? cout << "Yes\n" : 
-                         cout << "No\n"; 
-//    search(root, "these")? cout << "Yes\n" : 
-//                           cout << "No\n"; 
     return 0; 
 } 
