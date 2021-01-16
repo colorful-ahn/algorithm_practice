@@ -4,8 +4,7 @@
 using namespace std;
 
 vector<int> v;
-vector<int> v1;
-vector<int> vm; 
+vector<int>  v1;
 
 
 int main(){
@@ -22,13 +21,13 @@ int main(){
 	
 	cin >> P >> K; 
 	v.assign(K,0);
-	vm.assign(K,0);
 	
+
 	for(int i=0; i<K-1; i++){
 		v[i]=x;
 		x++;
 	}
-
+	
 	for(int i=0;i<K-1;i++){
 		p=v[i];
 		if(v[i]!=0){
@@ -43,7 +42,7 @@ int main(){
 	}
 	
 	for(int i=0; i<K-1;i++){
-		if(v[i]!=0){
+		if(v[i]!=0){	
 			v1.push_back(v[i]);	
 		}else{
 			continue;
@@ -51,21 +50,30 @@ int main(){
 		
 	}
 	//p 리스트  검출 끝.
-	int r=0;
 	// str형태 인덱스 자르기.	
 //	} // 143 10 => 143을 2 3 5 7 11로 나누어 봤음
+	int mini=1000000;
+	
 	for(int i=0; i<v1.size();i++){
 		int mod = 0;
 		for(int j=0; j<P.length();j++){
 			mod = (mod*10 + P[j]-'0')%v1[i];
 			
 		}
-		cout << "v : "<<v1[i] << " d : " << mod << "\n";
-	
+		if(mod == 0){
+			mini=min(v1[i],mini);
+		}
+		
+		//cout << "v : "<<v1[i] << " d : " << mod << "H : " << re[0] <<"\n";
 	}
-	 //mod ==0 이면 BAD출력하고 둘중 작은 숫자. 
+	if(mini < K && mini!=1000000){
+		cout << "BAD " <<mini << "\n";
+	}else{
+		cout << "GOOD\n";
+	}
 	
-	 
+	
+	 //mod ==0 이면 BAD출력하고 둘중 작은 숫자. 
 	
 }
 
