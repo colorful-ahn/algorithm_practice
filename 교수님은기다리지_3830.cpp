@@ -11,36 +11,42 @@ long long weight[MAX];
 
 int find(int a){
 	if(pr[a]==a) return a;
+		int x = pr[a];
 		pr[a] = find(pr[a]);
-		weight[a] +=weight[pr[a]];
+		weight[a] +=weight[x];
 		return pr[a];
 	
 }
 
 void unionf(int a, int b, int c){
-	
 	if(a>b){
 		int tmp;
-		tmp =a;
+		tmp = a;
 		a = b;
 		b = tmp;
 		c = -c;
 	}
-	find(a);
-	find(b);
-	pr[b]=a;
-	weight[b] = c+weight[a] - weight[b];
+	int Ra = find(a);
+	int Rb = find(b);
+	if(Ra == Rb ) return ;
+	pr[Rb]=Ra;
+	weight[Rb] += c+weight[a] - weight[b];
 }
 
 int main(){
 	
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
 	while(true){
 		cin >> N >> M;
 		if(N==0 && M==0) break;
+		
 		for(int i=1; i<=N; i++){
 		pr[i]=i;
 		weight[i]=0;
 		}
+		
 		for(int i=1; i<=M; i++){
 			char ch;
 			int a,b,c;
