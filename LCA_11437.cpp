@@ -23,6 +23,7 @@ void dep(int cur,int parent){
 
 
 int solution(int a, int b){
+	if(a==b) return a;
 	int x,y,pa,pb;
 	x=d[a];
 	y=d[b];
