@@ -28,7 +28,7 @@ int main(){
 			count++;
 			
 			sum+=arr[i+1];
-			count=0
+			count=0;
 		}
 	}
 	
