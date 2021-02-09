@@ -15,6 +15,7 @@ void BT(int cnt){
 		 return;
 	 }
 	 for(int i=1; i<=n; i++){
+	 	if(arr[cnt-1]>i) continue; 
 	 		arr[cnt] = i;
 	 		BT(cnt+1);
 	 }
