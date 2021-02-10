@@ -4,7 +4,7 @@
 using namespace std;
 
 int n,m,k;
-ll fen[1000001];
+ll fen[1000001]={0,};
 ll total[1000001]={0,};
 
 void add(int at, ll val){
@@ -23,14 +23,6 @@ ll sum(int at){
 	}
 	return result;
 }
-
-int getmax(int a,int b){
-	return a>b? a:b;
-}
-int getmin(int a,int b){
-	return a<b? a:b;
-}
-
 
 int main(){
 	scanf("%d%d%d",&n,&m,&k);
@@ -52,17 +44,16 @@ int main(){
 		}
 		else if(x==2){
 			int a,b;
-			for(int j=1; j<=1000001; j++){
-				if(total[j]==0) continue;
-				printf("%d %d\n",j,total[j]);
-			}
 			scanf("%d%d",&a,&b);
+			ll sol = sum(b)-sum(a-1);
 			for(int j=a; j<=b; j++){
 				if(total[j]==0) continue;
-				add(j,total[j]);
-				total[j]=0;
+				//add(j,total[j]);
+				sol +=total[j];
+				//total[j]=0;
 			}
-			printf("%lld\n",sum(b)-sum(a-1));
+			//printf("%lld\n",sum(b)-sum(a-1));
+			printf("%lld\n",sol);
 			
 		}
 	}
