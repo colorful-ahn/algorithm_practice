@@ -10,6 +10,7 @@ void find_answer()
 	answer.push_back(0);
 	answer.push_back(1);
 	answer.push_back(2);
+	
     long long tmp;
     for(int i = 3; i <= N; i++)
     {
