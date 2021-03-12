@@ -4,7 +4,6 @@ using namespace std;
 
 bool visited[1000001];
 vector<int> v;
-int arr[1000001];
 
 int main(){
 	int a,b;
